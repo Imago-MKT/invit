@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+
+        <style>
+        body {
+          margin: 0;
+          overflow-x: hidden; /* Para ocultar la barra de desplazamiento horizontal */
+          overflow-y: hidden; /* Inicialmente deshabilita el scroll vertical */
+        }
+      
+        .preloader {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-size: cover;
+          background-position: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          z-index: 9999; /* Asegura que esté por encima de todo */
+          transition: opacity 2s ease; /* Transición de opacidad */
+        }
+      
+        .preloader-img{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-size: cover;
+          background-position: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          background-image: url('img/fondo3.png'); /* Cambiar la ruta por la imagen deseada */
+          filter: blur(15px); /* Efecto de desenfoque */
+          z-index: -1; /* Envía la imagen de preloader detrás de todo */ 
+          
+          }
+      
+       .progress-bar {
+          width: 70%;
+          max-width: 600px;
+          height: 20px;
+          background-color: #f3f3f399;
+          border-radius: 10px;
+          overflow: hidden;
+        }
+      
+        .progress {
+          width: 0;
+          height: 100%;
+          background-color: #cca85b;
+          transition: width 2s ease; /* Transición de la barra de progreso */
+        }
+      
+        .progress-bar-container {
+          width: 700px;
+          background-position: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+              z-index: 9999; /* Asegura que esté por encima de la imagen de preloader */
+        }
+      
+       
+        .loading-text {
+          text-align: center;
+          margin-top: 10px;
+          color: white;
+          z-index: 9999;
+        }
+      
+        .overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-attachment: fixed;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          filter: blur(2px); /* Efecto de desenfoque */
+          transition: filter 2s ease; /* Transición de desenfoque */
+        }
+
+        .parallax {
+            height: 100vh;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+       
+        .nombre-img {
+            opacity: 0; /* Inicialmente oculta la imagen */
+            transition: opacity 1s ease; /* Añade una transición suave de opacidad */
+        }
+
+        .nombre-img.visible {
+            opacity: 1; /* Muestra la imagen después de cargar y pasado el tiempo de espera */
+            animation: zoomIn 1s ease forwards; /* Agrega una animación para hacer zoom después de 3 segundos */
+        }
+
+        /* Estilo de clase para elementos que se animarán al hacer scroll */
+        .animate-on-scroll {
+        opacity: 0;
+            transition: opacity 1s ease;
+            height: auto; /* Ajusta la altura del contenedor */
+            box-sizing: border-box; /* Incluye el relleno en el tamaño total del contenedor */
+        }
+
+        .visible {
+        
+            opacity: 1; /* Hace visible el elemento */
+            animation: appearFromBelow 1s ease forwards; /* Animación para aparecer desde abajo */
+        }
+      
+      
+      /* Estilo para la barra de scroll */
+      ::-webkit-scrollbar {
+          z-index:9999;
+          width: 5px; /* Ancho de la barra de scroll */
+          background-color: #ffff; /* Color de fondo transparente */
+        }
+      
+        /* Estilo para el pulgar de la barra de scroll */
+        ::-webkit-scrollbar-thumb {
+          
+          background-color: rgba(0, 0, 0, 0.5); /* Color del pulgar con transparencia */
+          border-radius: 5px; /* Borde redondeado */
+        }
+      
+        .modelo{
+          margin-left: -150px;
+          text-align: left;
+      
+        }
+      
+        .CTA {
+          font-family: cursive;
+          font-size: 16px;
+          width: 250px;
+          height: 30px;
+          margin: 0;
+          border-radius: 6px;
+          border: none;
+          filter: drop-shadow(0px 5px 3px black);
+          position: relative;
+          z-index: 10001;
+          /* display: flex; */
+          justify-content: center;
+          /* align-items: center; */
+          align-items: center;
+          flex-direction: column;
+          flex-wrap: nowrap;
+          align-content: center;
+        }
+      
+
+      
+      @keyframes appearFromBelow {
+          from {
+              transform: translateY(20px); /* Inicia la animación 50px más abajo */
+              opacity: 0; /* Opacidad inicial */
+          }
+          to {
+              transform: translateY(0); /* Termina la animación en su posición actual */
+              opacity: 1; /* Opacidad final */
+          }
+      }
+      
+      @keyframes zoomIn {
+          from {
+              transform: scale(0.5); /* Escala inicial de la imagen */
+              opacity: 0; /* Opacidad inicial */
+          }
+          to {
+              transform: scale(1); /* Escala final de la imagen */
+              opacity: 1; /* Opacidad final */
+          }
+      }
+      
+      
+        @media only screen and (max-width: 900px) {
+      
+          .progress-bar-container { width: 90%;}
+          .section{
+            width: 80%;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+          }
+      
+          .section img{
+            width: 90%;
+          }
+      
+          .section , .custom{
+            font-size: 15px;
+          }    
+         
+          .CTA{
+            width: 90%;
+            height: 11px;
+            margin: 10px;
+            border-radius: 6px;
+            border: none;
+            filter: drop-shadow(0px 5px 3px black);
+            position: relative;
+            z-index: 10001;
+            /* display: flex; */
+            justify-content: center;
+            align-items: center;
+            align-items: center;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-content: center;
+            background-color: white;
+          }
+        }
+        </style>
+    </head>
+    <body>
+      <div class="preloader">
+        <div class="preloader-img"></div>
+        <div class="progress-bar-container">
+          <div class="progress-bar">
+            <div class="progress"></div>
+          </div>
+          <div class="loading-text">Loading...</div>
+        </div>
+      </div>
+      
+      <div class="overlay"></div>
+
+    <div class="container">
+
+        <div class="parallax parallax1">
+            <div class="section">
+              <img style="width: 850px;" src="img/titulo.png" class="nombre-img" alt="">
+            </div>
+          </div>
+
+    <div class="doble" >
+
+        <div class="doblefoto" style="width: 50%; float: right; ">
+            <img src="img/modelo.jpeg" alt="">
+        </div>
+
+        <div class="texto" style="text-align: center; ">
+            <img style="height: 250px;" src="img/nombre modelo.png" alt="">
+        </div>
+
+    </div>
+
+    <div class="banner">
+
+        <div class="textbanner">
+            <span style="font-size: 25pt;">Estan codialmente invitados a una noche llena de baila y diversion.</span>
+            <h1 style="font-size: 40pt; margin: 10px;"> Sabado <span style="color: rgb(10, 65, 10);">27</span> Julio del 2024</h1>
+        </div>
+
+    </div>
+
+    <div class="doble" style="height: 80vh;">
+
+        <div class="doblefoto" style=" height: 80vh; float: left;">
+            <img src="img/padres.jpg" alt="" style="height: 80vh;  object-position: 0px 20%;">
+        </div>
+
+        <div class="texto" style="height: 80vh; text-align: center; font-size: 20pt">
+            <h1 style="font-size: 40pt; color:rgb(10, 65, 10);">Mis Padres </h1>
+            <br > <h2>         Nazario Garcia Estrada & <br>
+            Maria Eugenia Guzman Solorio</h2>
+        </div>
+
+    </div>
+
+    <div class="banner">
+
+        <div class="textbanner">
+            <h1 style="font-size: 45pt; color: rgb(10, 65, 10);">Ceremonia Religiosa</h1>
+            <input type="button" value=" Ubicacion " style= "width: 50%; height: 15%; border-radius: 10px; border: none;box-shadow: 0px 6px 5px; font-size: 21px;">
+        </div>
+
+    </div>
+
+    <div class="doble" style="height: 70vh;">
+
+        <div class="doblefoto animate-on-scroll " style=" height: 70vh; float: left;">
+            <img src="https://www.aboutespanol.com/thmb/QZChZAWL-zeTKpOKRLog8BtIfZ4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/alasdair-elmes-ULHxWq8reao-unsplash-8cf0ae7475064fa0a601108668de20a2.jpg" alt=""
+            style="height: 70vh; object-fit: none; object-position: -58px 66%;">
+        </div>
+
+        <div class="texto" style="height: 70vh; text-align: center;">
+            <h1 style="color: rgb(10, 65, 10); font-size: 35pt;">
+                Ixtapaluca Col. paseos de coatepec <br> calle paseo de los molinos <br> Mz.3 Lote 49 <br> </h1>
+               <span style="font-size: 30px; color: rgb(10, 65, 10);">Lago de los Cisnes</span>
+                <br> <br>
+                <a href="https://bitly.ws/3gIxD" target="_blank" rel="noopener noreferrer">
+                  <button class="btn btn-primary CTA animate-on-scroll visible" type="button">Confirmar Asistencia</button></a>
+
+                  <br><br>
+                <a href="https://bitly.ws/3gKsE" target="_blank" rel="noopener noreferrer">
+                <button style="color: rgb(10, 65, 10);" class="btn btn-primary CTA animate-on-scroll visible" type="button">Ver Ubicación</button></a>
+              </div>
+        </div>
+
+    </div>
+   
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
